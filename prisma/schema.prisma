@@ -13,7 +13,7 @@ model GoldData {
   id                Int      @id @default(autoincrement())
   date              String
   time              String
-  round             Int 
+  round             Int
   sellPrice         Float
   buyPrice          Float
   ornamentSellPrice Float
@@ -23,6 +23,14 @@ model GoldData {
   updatedAt         DateTime @updatedAt
 
   @@unique([date, time, round])
+}
+
+model Currency {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  timestamp String
+  period    String
+  rate      Float
 }
 
 model Member {

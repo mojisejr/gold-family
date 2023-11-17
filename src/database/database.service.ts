@@ -1,7 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { Currency } from 'src/interfaces/currency/currency';
 import { Gold } from 'src/interfaces/gold/gold';
-import { parseThaiDate } from 'src/util/parseThaiDate';
 
 const prisma = new PrismaClient();
 
@@ -56,7 +56,20 @@ export class DatabaseService {
       return found;
     } catch (error) {
       throw new InternalServerErrorException(
-        'DatabaseService[getLatestGoldData]: cannot get latest gold data',
+        'DatabaseService[getLatestGVoldData]: cannot get latest gold data',
+      );
+    }
+  }
+
+  async saveCurrencyData(currency: Currency) {
+    try {
+      const created = await prisma.currency.create({
+        data: { ...currency, name: 'usd/thb' },
+      });
+      return created;
+    } catch (error) {
+      throw new InternalServerErrorException(
+        'DatabaseService[saveCurrencyData]: cannot write currency',
       );
     }
   }

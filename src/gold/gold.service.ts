@@ -65,11 +65,15 @@ export class GoldService {
       ...data,
       round: data.round - 1,
     });
+
     if (prevGoldData == null) {
-      await this.databaseService.saveGoldData({ ...data, priceChange: '0' });
+      return await this.databaseService.saveGoldData({
+        ...data,
+        priceChange: '0',
+      });
     } else {
       const priceChange = (data.buyPrice - prevGoldData.buyPrice).toString();
-      await this.databaseService.saveGoldData({ ...data, priceChange });
+      return await this.databaseService.saveGoldData({ ...data, priceChange });
     }
   }
 }
