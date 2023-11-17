@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model GoldData {
+  id                Int      @id @default(autoincrement())
+  date              String
+  time              String
+  round             Int 
+  sellPrice         Float
+  buyPrice          Float
+  ornamentSellPrice Float
+  ornamentBuyPrice  Float
+  priceChange       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@unique([date, time, round])
+}
+
+model Member {
+  id         Int    @id @default(autoincrement())
+  name       String
+  latestBuy  Int
+  latestSell Int
+}
